@@ -1,5 +1,36 @@
 console.log('✅ script.js chargé');
 
+// Fonction pour formater la date
+function formaterDate(dateStr) {
+    if (!dateStr) return 'Date inconnue';
+    
+    try {
+        const date = new Date(dateStr);
+        // Vérifier si la date est valide
+        if (isNaN(date.getTime())) {
+            return dateStr; // Retourner la chaîne originale si invalide
+        }
+        
+        const maintenant = new Date();
+        const diffTemps = maintenant - date;
+        const diffJours = Math.floor(diffTemps / (1000 * 60 * 60 * 24));
+        
+        // Format relatif pour les dates récentes
+        if (diffJours === 0) return "Aujourd'hui";
+        if (diffJours === 1) return "Hier";
+        if (diffJours < 7) return `Il y a ${diffJours} jours`;
+        
+        // Format complet pour les dates plus anciennes
+        return date.toLocaleDateString('fr-FR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+    } catch (e) {
+        return dateStr;
+    }
+}
+
 // Fonction pour afficher les articles
 function displayArticles(articles) {
     console.log('🔄 Affichage des articles:', articles);
@@ -43,7 +74,7 @@ function displayArticles(articles) {
             <p class="article-description">${article.description || 'Description non disponible'}</p>
             <div class="article-meta">
                 <span class="article-source">${article.source || 'Source inconnue'}</span>
-                <span class="article-date">${article.date || 'Date inconnue'}</span>
+                <span class="article-date">${formaterDate(article.date)}</span>
             </div>
             <a href="${article.link || '#'}" target="_blank" class="article-link">Lire l'article →</a>
         `;
