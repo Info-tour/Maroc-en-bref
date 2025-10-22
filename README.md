@@ -1,2 +1,2 @@
-# en-bref--Maroc
+# en-bref-Maroc
 Veille médiatique marocaine consolidée
