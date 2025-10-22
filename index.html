@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maroc en Bref - Veille Médiatique</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🇲🇦 Maroc en Bref</h1>
+            <p>Veille médiatique marocaine consolidée</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="filters">
+            <input type="text" id="searchInput" placeholder="🔍 Rechercher dans les actualités...">
+            <select id="categoryFilter">
+                <option value="">Toutes les catégories</option>
+                <option value="politique">Politique</option>
+                <option value="economie">Économie</option>
+                <option value="societe">Société</option>
+                <option value="sport">Sport</option>
+                <option value="culture">Culture</option>
+            </select>
+            <button id="refreshBtn">🔄 Actualiser</button>
+        </section>
+
+        <section id="loading" class="loading">
+            Chargement des actualités...
+        </section>
+
+        <section id="articlesContainer" class="articles-grid">
+            <!-- Les articles seront chargés ici par JavaScript -->
+        </section>
+
+        <section id="noResults" class="no-results" style="display: none;">
+            Aucun article trouvé pour votre recherche.
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Maroc en Bref - Par Info-tour</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
