@@ -1,6 +1,6 @@
 console.log('✅ script.js chargé');
 
-// Fonction pour formater la date
+// Fonction pour formater la date - VERSION 2025
 function formaterDate(dateStr) {
     if (!dateStr) return 'Date inconnue';
     
@@ -8,17 +8,23 @@ function formaterDate(dateStr) {
         const date = new Date(dateStr);
         // Vérifier si la date est valide
         if (isNaN(date.getTime())) {
-            return dateStr; // Retourner la chaîne originale si invalide
+            return dateStr;
         }
         
         const maintenant = new Date();
-        const diffTemps = maintenant - date;
+        const aujourdhui = new Date(maintenant.getFullYear(), maintenant.getMonth(), maintenant.getDate());
+        const dateArticle = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        
+        const diffTemps = aujourdhui - dateArticle;
         const diffJours = Math.floor(diffTemps / (1000 * 60 * 60 * 24));
+        
+        console.log(`Date article: ${dateStr}, Date aujourd'hui: ${aujourdhui}, Diff jours: ${diffJours}`);
         
         // Format relatif pour les dates récentes
         if (diffJours === 0) return "Aujourd'hui";
         if (diffJours === 1) return "Hier";
         if (diffJours < 7) return `Il y a ${diffJours} jours`;
+        if (diffJours < 30) return `Il y a ${Math.floor(diffJours/7)} semaine${Math.floor(diffJours/7) > 1 ? 's' : ''}`;
         
         // Format complet pour les dates plus anciennes
         return date.toLocaleDateString('fr-FR', {
@@ -27,6 +33,7 @@ function formaterDate(dateStr) {
             year: 'numeric'
         });
     } catch (e) {
+        console.error('Erreur format date:', e);
         return dateStr;
     }
 }
@@ -92,9 +99,6 @@ function filterArticles() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
     const category = document.getElementById('categoryFilter').value;
 
-    console.log('Terme de recherche:', searchTerm);
-    console.log('Catégorie:', category);
-
     // Vérifier que actualitesMaroc existe
     if (typeof actualitesMaroc === 'undefined') {
         console.error('❌ ERREUR: actualitesMaroc non défini');
@@ -118,6 +122,7 @@ function filterArticles() {
 // Fonction pour initialiser la page
 function init() {
     console.log('🚀 Initialisation du site...');
+    console.log('📅 Date système:', new Date().toLocaleDateString('fr-FR'));
     
     // Vérifier que actualitesMaroc existe
     if (typeof actualitesMaroc === 'undefined') {
@@ -143,22 +148,18 @@ function init() {
 
     if (searchInput) {
         searchInput.addEventListener('input', filterArticles);
-        console.log('✅ Écouteur de recherche ajouté');
     }
 
     if (categoryFilter) {
         categoryFilter.addEventListener('change', filterArticles);
-        console.log('✅ Écouteur de catégorie ajouté');
     }
 
     if (refreshBtn) {
         refreshBtn.addEventListener('click', () => {
-            console.log('🔄 Actualisation manuelle');
             if (searchInput) searchInput.value = '';
             if (categoryFilter) categoryFilter.value = '';
             displayArticles(actualitesMaroc);
         });
-        console.log('✅ Écouteur de rafraîchissement ajouté');
     }
 }
 
